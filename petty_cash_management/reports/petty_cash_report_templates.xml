@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="petty_cash_report_pdf_template">
+        <t t-call="web.external_layout">
+
+            <t t-foreach="docs" t-as="o">
+
+                <main class="mt32 mb32">
+                    <div class="page">
+
+                        <h2 class="text-center">
+                            <strong>Petty Cash Report</strong>
+                        </h2>
+                        <h4 class="text-center" t-esc="o.name"/>
+
+                        <!-- BASIC INFO -->
+                        <table class="table table-sm mt-3">
+                            <tr>
+                                <th>Date:</th>
+                                <td><t t-esc="o.date"/></td>
+                            </tr>
+                            <tr>
+                                <th>Submitted By:</th>
+                                <td><t t-esc="o.user_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <th>Petty Cash Account:</th>
+                                <td>
+                                    <t t-esc="o.petty_cash_account_id.code"/> -
+                                    <t t-esc="o.petty_cash_account_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Journal:</th>
+                                <td><t t-esc="o.journal_id.name"/></td>
+                            </tr>
+                        </table>
+
+
+                        <!-- EXPENSE LINES -->
+                        <h4 class="mt-4">Expense Lines</h4>
+
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Invoice</th>
+                                    <th>PO</th>
+                                    <th>MR</th>
+                                    <th>Zone</th>
+                                    <th>Category</th>
+                                    <th class="text-right">Before VAT</th>
+                                    <th class="text-right">VAT</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="line.date"/></td>
+                                        <td><t t-esc="line.description"/></td>
+                                        <td><t t-esc="line.invoice_number"/></td>
+                                        <td><t t-esc="line.po_number"/></td>
+                                        <td><t t-esc="line.mr_number"/></td>
+                                        <td><t t-esc="line.zone"/></td>
+                                        <td><t t-esc="line.category_id.name"/></td>
+
+                                        <td class="text-right">
+                                           <t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % line.amount_before_vat)"/>
+                                        </td>
+
+                                        <td class="text-right">
+                                            <t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % line.vat_amount)"/>
+                                        </td>
+
+                                        <td class="text-right">
+                                            <t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % line.amount_total)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+
+                        <!-- TOTALS -->
+                        <h4 class="mt-4">Totals</h4>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Untaxed:</th>
+                                <td><t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % o.amount_untaxed)"/></td>
+                            </tr>
+                            <tr>
+                                <th>VAT:</th>
+                                <td><t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % o.amount_vat)"/></td>
+                            </tr>
+                            <tr>
+                                <th>Total:</th>
+                                <td><t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % o.amount_total)"/></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </main>
+
+            </t>
+
+        </t>
+    </template>
+
+</odoo>

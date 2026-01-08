@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_petty_cash_form" model="ir.ui.view">
+        <field name="name">petty.cash.form</field>
+        <field name="model">petty.cash</field>
+        <field name="arch" type="xml">
+            <form string="Petty Cash Report">
+
+            <header>
+            <!-- IMPORT EXCEL (Users only, Draft only) -->
+            <button name="action_open_import_wizard"
+                    type="object"
+                    string="Import Excel"
+                    class="btn-primary"
+                    groups="petty_cash_management.group_petty_cash_user"
+                    invisible="state != 'draft'"/>
+
+            <!-- SUBMIT (Users only, Draft only) -->
+            <button name="action_submit"
+                    type="object"
+                    string="Submit"
+                    class="btn-primary"
+                    groups="petty_cash_management.group_petty_cash_user"
+                    invisible="state != 'draft'"/>
+
+            <!-- Print -->
+            <button name="%(petty_cash_report_action)d"
+                    string="Print"
+                    type="action"
+                    class="btn-primary"/>
+
+            <!-- APPROVE (Accountants only, Submitted only) -->
+            <button name="action_approve"
+                    type="object"
+                    string="Approve"
+                    class="btn-success"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="state != 'submitted'"/>
+
+            <!-- REJECT (Accountants only, Submitted only) -->
+            <button name="action_refuse"
+                    type="object"
+                    string="Reject"
+                    class="btn-secondary"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="state != 'submitted'"/>
+
+            <!-- RESET TO DRAFT (Accountants only, Approved or Refused) -->
+            <button name="action_reset_to_draft"
+                    type="object"
+                    string="Reset to Draft"
+                    class="btn-secondary"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="not(state in ['approved','refused'])"/>
+
+            <!-- CREATE JOURNAL ENTRY (Accountants only, Approved only, not already created) -->
+            <button name="action_create_journal_entry"
+                    type="object"
+                    string="Create Journal Entry"
+                    class="btn-primary"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="state != 'approved' or journal_entry_id"/>
+                        <field name="state" widget="statusbar"/>
+            </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="date"/>
+                        <field name="petty_cash_account_id"/>
+                        <field name="input_vat_account_id"/>
+                        <field name="journal_id"/>
+                        <field name="journal_entry_id" 
+                               readonly="1"
+                               groups="petty_cash_management.group_petty_cash_accountant"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Expense Lines">
+                           <field name="line_ids" context="{'default_petty_cash_id': id}" mode="list,form"/>
+                           </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_petty_cash_tree" model="ir.ui.view">
+        <field name="name">petty.cash.tree</field>
+        <field name="model">petty.cash</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_petty_cash" model="ir.actions.act_window">
+        <field name="name">Petty Cash Reports</field>
+        <field name="res_model">petty.cash</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

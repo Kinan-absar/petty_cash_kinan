@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_petty_cash_category_form" model="ir.ui.view">
+        <field name="name">petty.cash.category.form</field>
+        <field name="model">petty.cash.category</field>
+        <field name="arch" type="xml">
+            <form string="Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="account_id"/>
+                        <field name="sequence"/>
+                        <field name="tax_id"/>
+                        <field name="analytic_account_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_petty_cash_category_tree" model="ir.ui.view">
+        <field name="name">petty.cash.category.tree</field>
+        <field name="model">petty.cash.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="account_id"/>
+                <field name="tax_id"/>
+                <field name="analytic_account_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_petty_cash_category" model="ir.actions.act_window">
+        <field name="name">Categories</field>
+        <field name="res_model">petty.cash.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

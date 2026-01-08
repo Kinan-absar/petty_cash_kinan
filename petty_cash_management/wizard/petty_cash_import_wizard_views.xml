@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_petty_cash_import_wizard" model="ir.ui.view">
+        <field name="name">petty.cash.import.wizard.form</field>
+        <field name="model">petty.cash.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Excel">
+            <group>
+                <div class="o_form_label">Required Columns:</div>
+                <div class="text-muted">
+                    date, description, invoice_number, amount_before_vat, vat_applicable,
+                    category_name, supplier, po_number, mr_number, zone
+                </div>
+            </group>
+                <group>
+                    <field name="file" filename="filename" widget="binary"/>
+                </group>
+
+                <group>
+                    <button name="action_download_template"
+                            type="object"
+                            string="Download Template"
+                            class="btn-secondary"/>
+                </group>
+
+                <footer>
+                    <button string="Import" type="object" name="action_import" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_petty_cash_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import Petty Cash Lines</field>
+        <field name="res_model">petty.cash.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

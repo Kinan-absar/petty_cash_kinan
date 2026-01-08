@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="petty_cash_report_action" model="ir.actions.report">
+            <field name="name">Petty Cash Report PDF</field>
+            <field name="model">petty.cash</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">petty_cash_management.petty_cash_report_pdf_template</field>
+            <field name="print_report_name">'Petty Cash - %s' % (object.name)</field>
+        </record>
+    </data>
+</odoo>

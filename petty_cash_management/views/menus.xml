@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Main App Menu (Root Application) -->
+    <menuitem id="petty_cash_main_app"
+              name="Petty Cash"
+              sequence="10"
+              web_icon="petty_cash_management,static/description/icon.png"/>
+
+    <!-- Petty Cash Reports Menu -->
+    <menuitem id="menu_petty_cash_reports"
+              name="Petty Cash Reports"
+              parent="petty_cash_main_app"
+              action="action_petty_cash"/>
+
+    <!-- Categories Menu -->
+    <menuitem id="menu_petty_cash_categories"
+              name="Categories"
+              parent="petty_cash_main_app"
+              action="action_petty_cash_category"/>
+
+    <record id="action_petty_cash_settings" model="ir.actions.act_window">
+        <field name="name">Petty Cash Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <record id="action_petty_cash_config_wizard" model="ir.actions.act_window">
+        <field name="name">Configuration</field>
+        <field name="res_model">petty.cash.config.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="groups_id"
+            eval="[(4, ref('petty_cash_management.group_petty_cash_accountant'))]"/>
+    </record>
+
+    <menuitem id="menu_petty_cash_config"
+            name="Configuration"
+            parent="petty_cash_main_app"
+            action="action_petty_cash_config_wizard"
+            groups="petty_cash_management.group_petty_cash_accountant"/>
+
+
+</odoo>

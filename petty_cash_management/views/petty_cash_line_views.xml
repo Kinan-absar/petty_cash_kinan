@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_petty_cash_line_tree" model="ir.ui.view">
+        <field name="name">petty.cash.line.tree</field>
+        <field name="model">petty.cash.line</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="date"/>
+                <field name="description"/>
+                <field name="invoice_number"/>
+                <field name="amount_before_vat" sum="Untaxed Total"/>
+                <field name="vat_applicable" />
+                <field name="vat_amount" readonly="1" sum="VAT Total"/>
+                <field name="amount_total" readonly="1" sum="Grand Total"/>
+                <field name="category_id"/>
+
+                <!-- OPTIONAL FIELDS (hidden by default) -->
+                <field name="supplier" optional="hide"/>
+                <field name="po_number" optional="hide"/>
+                <field name="mr_number" optional="hide"/>
+                <field name="zone" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_petty_cash_line_form" model="ir.ui.view">
+        <field name="name">petty.cash.line.form</field>
+        <field name="model">petty.cash.line</field>
+        <field name="arch" type="xml">
+            <form string="Petty Cash Line">
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                        <field name="supplier"/>
+                        <field name="invoice_number"/>
+                        <field name="po_number"/>
+                        <field name="mr_number"/>
+                        <field name="zone"/>
+                        <field name="description"/>
+                        <field name="category_id"/>
+                    </group>
+
+                    <group>
+                        <field name="amount_before_vat"/>
+                        <field name="vat_applicable"/>
+                        <field name="vat_amount"/>
+                        <field name="amount_total"/>
+                    </group>
+
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
