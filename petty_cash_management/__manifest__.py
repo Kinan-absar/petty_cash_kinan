@@ -1,5 +1,5 @@
 {
-    'name': 'Petty Cash Management',
+    'name': 'Petty Cash Management (Advanced)',
     'version': '18.0.1.0.0',
     'author': 'Kinan',
     'website': 'https://absar-alomran.com',
